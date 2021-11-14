@@ -1,0 +1,13 @@
+﻿1
+00:00:00,000 --> 00:00:02,000
+This is a single line of text
+
+2
+00:00:02,025 --> 00:00:04,025
+upper line of text
+lower line of text
+
+3
+00:00:04,025 --> 00:00:06,025
+single line of text again
+

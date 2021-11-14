@@ -65,6 +65,8 @@ class B_PT_SubImportPanel(bpy.types.Panel):
             layout.use_property_split = True
             col = layout.column()
             col.separator(factor=1.0)
+            
+            col.label(text="--Update--")
             col.prop(strip, "location", text="Location")
             col.prop(strip, "font_size")
             col.prop(strip, "box_margin")
