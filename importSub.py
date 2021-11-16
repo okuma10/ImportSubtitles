@@ -214,7 +214,7 @@ def subImport(filepath,  framerate):
             print(f"Subtitle is already in scene - Updating from file")
 
 
-def updateSub(pos, font_size, boxMargin):
+def updateSub(pos, font, font_size, boxMargin):
     width = bpy.context.scene.render.resolution_x
     height = bpy.context.scene.render.resolution_y
 
@@ -225,19 +225,26 @@ def updateSub(pos, font_size, boxMargin):
     sequences = [sequence for sequence in bpy.data.scenes[0].sequence_editor.sequences if sequence.type == 'TEXT' and 'Sub.' in sequence.name]
 
     for i , sequence in enumerate(sequences):
-        print(f"sequence:{i} type:{sequence.type}  name:{sequence.name}")
+        font_changed = True if font != sequence.font else False
         if "-a" in sequence.name:
             sequence.location = (pos[0], pos[1] + doubble_line_offset)
             sequence.font_size = font_size
             sequence.box_margin = boxMargin
+            if font_changed:
+                sequence.font = font
         elif "-b" in sequence.name:
             sequence.location = (pos[0], pos[1] - doubble_line_offset)
             sequence.font_size = font_size
             sequence.box_margin = boxMargin
+            if font_changed:
+                sequence.font = font
         else:
             sequence.location = pos
             sequence.font_size = font_size
             sequence.box_margin = boxMargin
+            if font_changed:
+                sequence.font = font
+
             # if '-a' in sequences[i+1].name:
             #     print("double sequence")
             #

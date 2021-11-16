@@ -23,6 +23,8 @@ class A_OT_RunImport(bpy.types.Operator):
         subImport(file, fps)
         return {'FINISHED'}
 
+
+
 class A_OT_UpdateSub(bpy.types.Operator):
     '''
     Import or update subtitle sequences.
@@ -30,15 +32,16 @@ class A_OT_UpdateSub(bpy.types.Operator):
     '''
     bl_idname = "run.subupdate"
     bl_label = " updates the subtitles imported with this script "
-
-
-
     def execute(self,context):
         pos = bpy.context.selected_sequences[0].location
         boxMargin = bpy.context.selected_sequences[0].box_margin
+        font = bpy.context.selected_sequences[0].font
         font_size = bpy.context.selected_sequences[0].font_size
-        updateSub(pos, font_size, boxMargin)
+
+        updateSub(pos, font, font_size, boxMargin)
         return {'FINISHED'}
+
+
 
 class GetFileOperator(bpy.types.Operator,ImportHelper):
     bl_idname = "subimport.filepath"
@@ -84,6 +87,8 @@ class B_PT_SubImportPanel(bpy.types.Panel):
             col.separator(factor=1.0)
             
             col.label(text="--Update--")
+            row = col.row()
+            row.template_ID(strip, "font", open="font.open", unlink="font.unlink")
             col.prop(strip, "location", text="Location")
             col.prop(strip, "font_size")
             col.prop(strip, "box_margin")
