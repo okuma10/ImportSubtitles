@@ -1,9 +1,13 @@
 from .ExternalModules import pysubs2
 import pathlib,bpy
 
+info = "\x1b[38;2;254;211;48m"
+error ="\x1b[38;2;235;59;90;48m"
+rs = "\x1b[0m"
 
 def subImport(filepath,  framerate):
     #region inits
+
     subtitle_exists = False
     subtitles = None
     test_framerate = None
@@ -21,6 +25,10 @@ def subImport(filepath,  framerate):
         file = filepath
         if pathlib.Path(file).is_file():
             file_is_real = True
+            if pathlib.Path(file).suffix not in pysubs2.formats.FILE_EXTENSION_TO_FORMAT_IDENTIFIER:
+                print(f"{info}Unable to load subs from {pathlib.Path(file).name} {rs}:")
+                print(f"{info} - {pathlib.Path(file).suffix} {rs}{error} is not supported by pysubs2 at the moment. If it is, ask for the module to be updated in this addon{rs}!")
+                return
         else: file_is_real = False
     else:
         print("No file path or file not found")

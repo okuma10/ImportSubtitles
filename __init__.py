@@ -8,7 +8,7 @@ bl_info = {
 }
 
 import bpy
-from .panel import A_OT_RunImport,B_PT_SubImportPanel,A_OT_UpdateSub
+from .panel import A_OT_RunImport,B_PT_SubImportPanel,A_OT_UpdateSub,GetFileOperator
 
 
 
@@ -26,6 +26,7 @@ def register():
     bpy.utils.register_class(A_OT_RunImport)
     bpy.utils.register_class(B_PT_SubImportPanel)
     bpy.utils.register_class(A_OT_UpdateSub)
+    bpy.utils.register_class(GetFileOperator)
 
 
 
@@ -34,6 +35,7 @@ def unregister():
     bpy.utils.unregister_class(A_OT_RunImport)
     bpy.utils.unregister_class(B_PT_SubImportPanel)
     bpy.utils.unregister_class(A_OT_UpdateSub)
+    bpy.utils.unregister_class(GetFileOperator)
     pass
 
 

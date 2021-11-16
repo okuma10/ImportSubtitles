@@ -1,8 +1,14 @@
 from .importSub import *
 import bpy
+from bpy_extras.io_utils import ImportHelper
 
+#region Global functions
+def populate_file_path(context,filepath,):
+    bpy.data.scenes[0].SubImportPath = filepath
+    return {'FINISHED'}
+#endregion
 
-#n Operator
+#region n Operators
 class A_OT_RunImport(bpy.types.Operator):
     '''
     Import or update subtitle sequences.
@@ -10,8 +16,6 @@ class A_OT_RunImport(bpy.types.Operator):
     '''
     bl_idname = "run.subimport"
     bl_label = " runs the subtitle import script-for now "
-
-
 
     def execute(self,context):
         file = bpy.context.scene.SubImportPath
@@ -36,6 +40,17 @@ class A_OT_UpdateSub(bpy.types.Operator):
         updateSub(pos, font_size, boxMargin)
         return {'FINISHED'}
 
+class GetFileOperator(bpy.types.Operator,ImportHelper):
+    bl_idname = "subimport.filepath"
+    bl_label = "Import Subs"
+
+    filename_ext = ".txt"
+
+    filter_glob = bpy.props.StringProperty(default="*.*")
+
+    def execute(self,context):
+        return populate_file_path(context, self.filepath)
+#endregion
 
 
 
@@ -49,13 +64,15 @@ class B_PT_SubImportPanel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
 
-        row = layout.row()
-        row_col = row.column(align=True)
-        row_col.label(text="--Import--")
-        row_col.prop(context.scene,'SubImportPath', text="")
-        row_col.scale_y = 1
-        row_col.scale_x = 2
-        row_col.operator('run.subimport', text='Sub Import',icon='TRIA_RIGHT')
+        col = layout.column()
+        col.label(text="--Import--")
+        row = layout.row(align=True)
+        row.prop(context.scene,'SubImportPath', text="")
+        row.operator('subimport.filepath',text='', icon='FILEBROWSER')
+        col = layout.column(align=True)
+        col.scale_y = 1
+        col.scale_x = 2
+        col.operator('run.subimport', text='Sub Import',icon='TRIA_RIGHT')
 
         strip = context.active_sequence_strip
 
