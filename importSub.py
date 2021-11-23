@@ -1,4 +1,4 @@
-from .ExternalModules import pysubs2
+import pysubs2
 import pathlib,bpy
 
 info = "\x1b[38;2;254;211;48m"
@@ -245,8 +245,3 @@ def updateSub(pos, font, font_size, boxMargin):
             if font_changed:
                 sequence.font = font
 
-            # if '-a' in sequences[i+1].name:
-            #     print("double sequence")
-            #
-            # else:
-            #     print("single sequence")

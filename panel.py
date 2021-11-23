@@ -65,8 +65,8 @@ class B_PT_SubImportPanel(bpy.types.Panel):
     bl_category = 'SubImport'
 
     def draw(self, context):
-        layout = self.layout
 
+        layout = self.layout
         col = layout.column()
         col.label(text="--Import--")
         row = layout.row(align=True)

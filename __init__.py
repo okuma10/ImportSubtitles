@@ -8,20 +8,17 @@ bl_info = {
 }
 
 import bpy
-from .panel import A_OT_RunImport,B_PT_SubImportPanel,A_OT_UpdateSub,GetFileOperator
+from .add_external_modules import add_external_modules,remove_external_modules
+
 
 
 
 def register():
-    #n1 TODO: make this a Property group
-    # bpy.types.Scene.prototype_toggle = bpy.props.BoolProperty(name="Toggle", default=False)
-    # bpy.types.Scene.is_over_prototype = bpy.props.BoolProperty(name="Is Over", default=False)
-    # bpy.types.Scene.prototype_mX = bpy.props.IntProperty(name="MouseX", default=0)
-    # bpy.types.Scene.prototype_mY = bpy.props.IntProperty(name="MouseY", default=0)
-    # bpy.types.Scene.prototype_mBl = bpy.props.IntProperty(name="MouseButtonLeft", default=0)
-    # bpy.types.Scene.prototype_mBm = bpy.props.IntProperty(name="MouseButtonMiddle", default=0)
-    # bpy.types.Scene.prototype_mBr = bpy.props.IntProperty(name="MouseButtonRight", default=0)
-    # bpy.types.Scene.prototype_draw_context = bpy.props.StringProperty()
+    try:
+        import pysubs2
+    except:
+        add_external_modules()
+    from .panel import A_OT_RunImport, B_PT_SubImportPanel, A_OT_UpdateSub, GetFileOperator
     bpy.types.Scene.SubImportPath = bpy.props.StringProperty(name="Subtitle Path", default="")
     bpy.utils.register_class(A_OT_RunImport)
     bpy.utils.register_class(B_PT_SubImportPanel)
@@ -29,13 +26,14 @@ def register():
     bpy.utils.register_class(GetFileOperator)
 
 
-
-
 def unregister():
+
+    from .panel import A_OT_RunImport, B_PT_SubImportPanel, A_OT_UpdateSub, GetFileOperator
     bpy.utils.unregister_class(A_OT_RunImport)
     bpy.utils.unregister_class(B_PT_SubImportPanel)
     bpy.utils.unregister_class(A_OT_UpdateSub)
     bpy.utils.unregister_class(GetFileOperator)
+
     pass
 
 
